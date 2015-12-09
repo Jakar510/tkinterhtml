@@ -16,6 +16,6 @@ setup(
         "Programming Language :: Python :: 3",
         "Topic :: Software Development",
       ],
-      keywords="tkinter",
+      keywords="tkinter Tkinter tkhtml Tkhtml Tk",
       py_modules=["tkinterhtml"],
 )
