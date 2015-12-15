@@ -1,12 +1,28 @@
 """Wrapper for the Tkhtml widget from http://tkhtml.tcl.tk/tkhtml.html"""
 try:
     import tkinter as tk
+    from tkinter import ttk
 except ImportError:
     import Tkinter as tk
+    import ttk
 
-class TkHtml(tk.Widget):
-    def __init__(self, master=None, cfg={}, **kw):
-        master.tk.call("package", "require", "Tkhtml")
+_tkhtml_loaded = False
+
+def load_tkhtml(master, location=None):
+    global _tkhtml_loaded
+    if not _tkhtml_loaded:
+        if location:
+            master.tk.eval('global auto_path; lappend auto_path {%s}' % location)
+        master.tk.eval('package require Tkhtml')
+        _tkhtml_loaded = True        
+    
+class TkinterHtml(tk.Widget):
+    def __init__(self, master, cfg={}, **kw):
+        #master.tk.call("package", "require", "Tkhtml")
+        load_tkhtml(master
+                    # eg. "C:\\Python35\\tcl\\supa"
+                    )
+        
         tk.Widget.__init__(self, master, 'html', cfg, kw)
 
         # make selection and copying possible
@@ -106,9 +122,9 @@ class TkHtml(tk.Widget):
 if __name__ == "__main__":
     root = tk.Tk()
     
-    html = TkHtml(root, fontscale=0.8)
-    vsb = tk.Scrollbar(root, orient=tk.VERTICAL, command=html.yview)
-    hsb = tk.Scrollbar(root, orient=tk.HORIZONTAL, command=html.xview)
+    html = TkinterHtml(root, fontscale=0.8)
+    vsb = ttk.Scrollbar(root, orient=tk.VERTICAL, command=html.yview)
+    hsb = ttk.Scrollbar(root, orient=tk.HORIZONTAL, command=html.xview)
     html.configure(yscrollcommand=vsb.set)
     html.configure(xscrollcommand=hsb.set)
     
