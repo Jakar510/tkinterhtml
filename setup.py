@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
       name="tkinterhtml",
       version=0.1,
-      description="Wrapper for Tkhtml (http://tkhtml.tcl.tk/)",
+      description="Python wrapper for Tkhtml (http://tkhtml.tcl.tk/)",
       url="https://bitbucket.org/aivarannamaa/tkinterhtml",
       license="MIT",
       classifiers=[
