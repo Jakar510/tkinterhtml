@@ -1,6 +1,6 @@
 Wrapper for Tkhtml (http://tkhtml.tcl.tk/).
 
-Tested with Python 2.7, 3.3, 3.4, 3.5.
+Tested with Python 2.7, 3.2, 3.3, 3.4, 3.5.
 
 Includes Python package ``tkinterhtml`` with class ``TkinterHtml`` and Tkhtml binaries for:
 
