@@ -12,7 +12,7 @@ The binaries should work both with Tk 8.5 and 8.6.
 
 More about Tkhtml binaries
 --------------------------
-If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory). You may delete the wrong platform binaries after installation.
+If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory). You may delete unnecessary platform binaries after installation.
 
 If you are not happy with those binaries, then you could try compiling Tkhtml yourself. The scripts in *tkinterhtml/tkhtml* explain how I compiled it. Alternatively, you could try the binaries from Active Tcl (but check their license about redistribution).
 
