@@ -1,6 +1,6 @@
 ``tkinterhtml``
 ==================
-This is Python wrapper for `Tkhtml <http://tkhtml.tcl.tk/>`_.
+This is Python wrapper for `Tkhtml3 <http://tkhtml.tcl.tk/>`_.
 
 It's tested with Python 2.7, 3.2, 3.3, 3.4, 3.5.
 
