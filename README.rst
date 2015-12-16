@@ -1,6 +1,8 @@
-Wrapper for Tkhtml (http://tkhtml.tcl.tk/).
+``tkinterhtml``
+==================
+This is Python wrapper for `Tkhtml <http://tkhtml.tcl.tk/>`_.
 
-Tested with Python 2.7, 3.2, 3.3, 3.4, 3.5.
+It's tested with Python 2.7, 3.2, 3.3, 3.4, 3.5.
 
 Includes Python package ``tkinterhtml`` with class ``TkinterHtml`` and Tkhtml binaries for:
 
@@ -9,6 +11,10 @@ Includes Python package ``tkinterhtml`` with class ``TkinterHtml`` and Tkhtml bi
 * Linux (32 and 64-bit, tested on Ubuntu 12.04).
 
 The binaries should work both with Tk 8.5 and 8.6.
+
+Installation
+-------------
+``pip install tkinterhtml``
 
 Usage
 ------

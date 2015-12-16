@@ -1,10 +1,13 @@
 from setuptools import setup
 
+url = "https://bitbucket.org/aivarannamaa/tkinterhtml"
+
 setup(
       name="tkinterhtml",
-      version=0.3,
+      version=0.4,
       description="Python wrapper for Tkhtml (http://tkhtml.tcl.tk/)",
-      url="https://bitbucket.org/aivarannamaa/tkinterhtml",
+      long_description="See %s for more info" % url,
+      url=url,
       license="MIT",
       classifiers=[
         "Development Status :: 4 - Beta",
