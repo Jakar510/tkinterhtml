@@ -4,9 +4,9 @@ Tested with Python 2.7, 3.3, 3.4, 3.5.
 
 Includes Python package ``tkinterhtml`` with class ``TkinterHtml`` and Tkhtml binaries for:
 
-* Windows (32- and 64-bit);
-* Mac OS X (should work at least on Maverics and later);
-* Linux (32- and 64-bit, tested on Ubuntu 12.04).
+* Windows (32 and 64-bit);
+* Mac OS X (64-bit, should work on Lion and later, possibly also on 64-bit Snow Leopard);
+* Linux (32 and 64-bit, tested on Ubuntu 12.04).
 
 The binaries should work both with Tk 8.5 and 8.6.
 
