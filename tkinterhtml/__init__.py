@@ -24,7 +24,7 @@ def load_tkhtml(master, location=None):
 def get_tkhtml_folder():
     return os.path.join (os.path.abspath(os.path.dirname(__file__)),
                          "tkhtml",
-                         platform.system(),
+                         platform.system().replace("Darwin", "MacOSX"),
                          "64-bit" if sys.maxsize > 2**32 else "32-bit")
     
 class TkinterHtml(tk.Widget):
