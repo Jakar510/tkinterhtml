@@ -2,7 +2,7 @@ from setuptools import setup
 
 setup(
       name="tkinterhtml",
-      version=0.2,
+      version=0.3,
       description="Python wrapper for Tkhtml (http://tkhtml.tcl.tk/)",
       url="https://bitbucket.org/aivarannamaa/tkinterhtml",
       license="MIT",
@@ -24,5 +24,13 @@ setup(
                                     'tkhtml/Windows/32-bit/Tkhtml/*.dll',
                                     'tkhtml/Windows/64-bit/Tkhtml/*.tcl',
                                     'tkhtml/Windows/64-bit/Tkhtml/*.dll',
+                                    
+                                    'tkhtml/MacOSX/64-bit/Tkhtml/*.tcl',
+                                    'tkhtml/MacOSX/64-bit/Tkhtml/*.dylib',
+                                    
+                                    'tkhtml/Linux/32-bit/Tkhtml/*.tcl',
+                                    'tkhtml/Linux/32-bit/Tkhtml/*.so',
+                                    'tkhtml/Linux/64-bit/Tkhtml/*.tcl',
+                                    'tkhtml/Linux/64-bit/Tkhtml/*.so'
                                     ]}
 )
