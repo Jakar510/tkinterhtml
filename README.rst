@@ -1,8 +1,20 @@
-Wrapper for Tkhtml (http://tkhtml.tcl.tk/)
+Wrapper for Tkhtml (http://tkhtml.tcl.tk/).
 
-About Tkhtml binaries
------------------------
-If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory).
+Tested with Python 2.7, 3.3, 3.4, 3.5.
+
+Includes:
+
+* Python package ``tkinterhtml`` with class ``TkinterHtml``
+* Tkhtml binaries for:
+** Windows (32- and 64-bit);
+** Mac OS X (should work at least on Maverics and later);
+** Linux (32- and 64-bit, tested on Ubuntu 12.04).
+
+The binaries should work both with Tk 8.5 and 8.6.
+
+More about Tkhtml binaries
+--------------------------
+If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory). You may delete the wrong platform binaries after installation.
 
 If you are not happy with those binaries, then you could try compiling Tkhtml yourself. The scripts in *tkinterhtml/tkhtml* explain how I compiled it. Alternatively, you could try the binaries from Active Tcl (but check their license about redistribution).
 
