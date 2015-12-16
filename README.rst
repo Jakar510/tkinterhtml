@@ -18,7 +18,7 @@ Installation
 
 Usage
 ------
-See ``tkinterhtml/__main__.py``.
+See `tkinterhtml/__main__.py <https://bitbucket.org/aivarannamaa/tkinterhtml/src/master/tkinterhtml/__main__.py>`_.
 
 More about Tkhtml binaries
 --------------------------
