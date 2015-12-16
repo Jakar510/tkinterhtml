@@ -1,34 +1,9 @@
 Wrapper for Tkhtml (http://tkhtml.tcl.tk/)
 
-Building Tkhtml on Windows
---------------------------
-In Msys run following commands
+About Tkhtml binaries
+-----------------------
+If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory).
 
-.. sourcecode:: bash
+If you are not happy with those binaries, then you could try compiling Tkhtml yourself. The scripts in *tkinterhtml/tkhtml* explain how I compiled it. Alternatively, you could try the binaries from Active Tcl (but check their license about redistribution).
 
-    # Generate some source files (see readme in https://github.com/starseeker/tcltk/tree/master/tkhtml)
-    tclsh src/cssprop.tcl
-    tclsh src/tokenlist.txt
-    tclsh src/mkdefaultstyle.tcl > htmldefaultstyle.c
-    
-    # copy these generated files to src
-    mv *.c src
-    mv *.h src
-    
-    # create build dir
-    mkdir build
-    cd build
-    
-    TCL=/c/Tcl
-    
-    ../configure CFLAGS="-static-libgcc" \
-        --with-tcl=$TCL/lib \
-        --with-tk=$TCL/lib \
-        --with-tclinclude=$TCL/include \
-        --with-tkinclude=$TCL/include
-    
-    make    
-
-This should result with *Tkhtml30.dll* and *pkgIndex.tcl* in *build*.
-
-Create folder *Tkhtml* under *C:\Python35\Tcl* and copy these two files there. Add also *libgcc_s_dw2-1.dll* from MinGW bin directory.  
+If you don't want to keep the binaries inside package directory (maybe because you want to zip your packages), then you should copy the *Tkhtml* folder with *pcgIndex.tcl* and dll/so/dylib in it into your Tcl library directory. In Windows it's *<Python root>\tcl*.

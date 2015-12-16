@@ -1,2 +1,4 @@
 dist/*.zip
 tkinterhtml.egg-info
+__pycache__
+*.pyc
