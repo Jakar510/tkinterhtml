@@ -17,5 +17,5 @@ setup(
         "Topic :: Software Development",
       ],
       keywords="tkinter Tkinter tkhtml Tkhtml Tk",
-      py_modules=["tkinterhtml"],
+      packages=["tkinterhtml"],
 )

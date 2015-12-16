@@ -1,4 +1,9 @@
 """Wrapper for the Tkhtml widget from http://tkhtml.tcl.tk/tkhtml.html"""
+
+import sys
+import os.path
+import platform
+
 try:
     import tkinter as tk
     from tkinter import ttk
@@ -15,14 +20,17 @@ def load_tkhtml(master, location=None):
             master.tk.eval('global auto_path; lappend auto_path {%s}' % location)
         master.tk.eval('package require Tkhtml')
         _tkhtml_loaded = True        
+
+def get_tkhtml_folder():
+    return os.path.join (os.path.abspath(os.path.dirname(__file__)),
+                         "tkhtml",
+                         platform.system(),
+                         "64-bit" if sys.maxsize > 2**32 else "32-bit")
     
 class TkinterHtml(tk.Widget):
     def __init__(self, master, cfg={}, **kw):
-        #master.tk.call("package", "require", "Tkhtml")
-        load_tkhtml(master
-                    # eg. "C:\\Python35\\tcl\\supa"
-                    )
-        
+        #print(get_tkhtml_folder())
+        load_tkhtml(master, get_tkhtml_folder())
         tk.Widget.__init__(self, master, 'html', cfg, kw)
 
         # make selection and copying possible
@@ -119,36 +127,3 @@ class TkinterHtml(tk.Widget):
         self.clipboard_clear()
         self.clipboard_append(selected_text)
 
-if __name__ == "__main__":
-    root = tk.Tk()
-    
-    html = TkinterHtml(root, fontscale=0.8)
-    vsb = ttk.Scrollbar(root, orient=tk.VERTICAL, command=html.yview)
-    hsb = ttk.Scrollbar(root, orient=tk.HORIZONTAL, command=html.xview)
-    html.configure(yscrollcommand=vsb.set)
-    html.configure(xscrollcommand=hsb.set)
-    
-    
-    
-    #html.tag("configure", "selection", "-background", "black")
-
-    html.grid(row=0, column=0, sticky=tk.NSEW)
-    vsb.grid(row=0, column=1, sticky=tk.NSEW)
-    hsb.grid(row=1, column=0, sticky=tk.NSEW)
-    root.columnconfigure(0, weight=1)
-    root.rowconfigure(0, weight=1)
-
-    html.parse("""
-    <html>
-    <body>
-    <h1>Hello world!</h1>
-    <p>First para</p>
-    <ul>
-        <li>first list item</li>
-        <li>second list item</li>
-    </ul>
-    </body>
-    </html>    
-    """)
-    
-    root.mainloop()
