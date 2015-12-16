@@ -10,6 +10,10 @@ Includes Python package ``tkinterhtml`` with class ``TkinterHtml`` and Tkhtml bi
 
 The binaries should work both with Tk 8.5 and 8.6.
 
+Usage
+------
+See ``tkinterhtml/__main__.py``.
+
 More about Tkhtml binaries
 --------------------------
 If you ``pip install tkinterhtml``, then besides Python code you also get pre-built Tkhtml binaries and scripts for all main platforms (see the folder *tkhtml* inside resulting package directory). You may delete unnecessary platform directories after installation.
