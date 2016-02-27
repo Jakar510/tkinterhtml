@@ -4,7 +4,7 @@ url = "https://bitbucket.org/aivarannamaa/tkinterhtml"
 
 setup(
       name="tkinterhtml",
-      version=0.4,
+      version=0.5,
       description="Python wrapper for Tkhtml3 (http://tkhtml.tcl.tk/)",
       long_description="See %s for more info" % url,
       url=url,

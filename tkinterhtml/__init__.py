@@ -127,3 +127,24 @@ class TkinterHtml(tk.Widget):
         self.clipboard_clear()
         self.clipboard_append(selected_text)
 
+class HtmlFrame(ttk.Frame):
+    def __init__(self, master, fontscale=0.8, **kw):
+        ttk.Frame.__init__(self, master, **kw)
+    
+        html = self.html = TkinterHtml(self, fontscale=fontscale)
+        vsb = ttk.Scrollbar(self, orient=tk.VERTICAL, command=html.yview)
+        hsb = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=html.xview)
+        html.configure(yscrollcommand=vsb.set)
+        html.configure(xscrollcommand=hsb.set)
+        #html.tag("configure", "selection", "-background", "black")
+        
+        html.grid(row=0, column=0, sticky=tk.NSEW)
+        vsb.grid(row=0, column=1, sticky=tk.NSEW)
+        hsb.grid(row=1, column=0, sticky=tk.NSEW)
+        self.columnconfigure(0, weight=1)
+        self.rowconfigure(0, weight=1)
+    
+    def set_content(self, html_source):
+        self.html.reset()
+        self.html.parse(html_source)
+            

@@ -1,31 +1,20 @@
+import urllib.request
 try:
     import tkinter as tk
-    from tkinter import ttk
 except ImportError:
     import Tkinter as tk
-    import ttk
 
-from tkinterhtml import TkinterHtml
+from tkinterhtml import HtmlFrame
 
 root = tk.Tk()
 
-html = TkinterHtml(root, fontscale=0.8)
-vsb = ttk.Scrollbar(root, orient=tk.VERTICAL, command=html.yview)
-hsb = ttk.Scrollbar(root, orient=tk.HORIZONTAL, command=html.xview)
-html.configure(yscrollcommand=vsb.set)
-html.configure(xscrollcommand=hsb.set)
+frame = HtmlFrame(root)
+frame.grid(sticky=tk.NSEW)
 
-
-
-#html.tag("configure", "selection", "-background", "black")
-
-html.grid(row=0, column=0, sticky=tk.NSEW)
-vsb.grid(row=0, column=1, sticky=tk.NSEW)
-hsb.grid(row=1, column=0, sticky=tk.NSEW)
 root.columnconfigure(0, weight=1)
 root.rowconfigure(0, weight=1)
 
-html.parse("""
+frame.set_content("""
 <html>
 <body>
 <h1>Hello world!</h1>
@@ -37,5 +26,7 @@ html.parse("""
 </body>
 </html>    
 """)
+
+frame.set_content(urllib.request.urlopen("http://tkhtml.tcl.tk/").read().decode())
 
 root.mainloop()
