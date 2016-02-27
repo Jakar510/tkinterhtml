@@ -173,6 +173,8 @@ class HtmlFrame(ttk.Frame):
         
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
+        
+        self.set_content("<html><body></body></html>")
     
     def set_content(self, html_source):
         self.html.reset()
