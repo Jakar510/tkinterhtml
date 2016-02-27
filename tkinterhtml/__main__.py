@@ -8,7 +8,7 @@ from tkinterhtml import HtmlFrame
 
 root = tk.Tk()
 
-frame = HtmlFrame(root)
+frame = HtmlFrame(root, horizontal_scrollbar="auto")
 frame.grid(sticky=tk.NSEW)
 
 root.columnconfigure(0, weight=1)

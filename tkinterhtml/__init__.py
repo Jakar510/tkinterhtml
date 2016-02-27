@@ -127,24 +127,56 @@ class TkinterHtml(tk.Widget):
         self.clipboard_clear()
         self.clipboard_append(selected_text)
 
+
 class HtmlFrame(ttk.Frame):
-    def __init__(self, master, fontscale=0.8, **kw):
+    def __init__(self, master, fontscale=0.8, vertical_scrollbar=True,
+                 horizontal_scrollbar=True, **kw):
+        
         ttk.Frame.__init__(self, master, **kw)
     
         html = self.html = TkinterHtml(self, fontscale=fontscale)
-        vsb = ttk.Scrollbar(self, orient=tk.VERTICAL, command=html.yview)
-        hsb = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=html.xview)
-        html.configure(yscrollcommand=vsb.set)
-        html.configure(xscrollcommand=hsb.set)
-        #html.tag("configure", "selection", "-background", "black")
-        
         html.grid(row=0, column=0, sticky=tk.NSEW)
-        vsb.grid(row=0, column=1, sticky=tk.NSEW)
-        hsb.grid(row=1, column=0, sticky=tk.NSEW)
+        
+        if vertical_scrollbar:
+            if vertical_scrollbar == "auto":
+                vsb = _AutoScrollbar(self, orient=tk.VERTICAL, command=html.yview)
+            else:
+                vsb = ttk.Scrollbar(self, orient=tk.VERTICAL, command=html.yview)
+                
+            html.configure(yscrollcommand=vsb.set)
+            vsb.grid(row=0, column=1, sticky=tk.NSEW)
+        
+        if horizontal_scrollbar:
+            if horizontal_scrollbar == "auto":
+                hsb = _AutoScrollbar(self, orient=tk.HORIZONTAL, command=html.xview)
+            else:
+                hsb = ttk.Scrollbar(self, orient=tk.HORIZONTAL, command=html.xview)
+                
+            html.configure(xscrollcommand=hsb.set)
+            hsb.grid(row=1, column=0, sticky=tk.NSEW)
+        
         self.columnconfigure(0, weight=1)
         self.rowconfigure(0, weight=1)
     
     def set_content(self, html_source):
         self.html.reset()
         self.html.parse(html_source)
-            
+
+class _AutoScrollbar(ttk.Scrollbar):
+    # http://effbot.org/zone/tkinter-autoscrollbar.htm
+    # a vert_scrollbar that hides itself if it's not needed.  only
+    # works if you use the grid geometry manager.
+    def set(self, lo, hi):
+        # TODO: this can make GUI hang or max out CPU when scrollbar wobbles back and forth
+        if float(lo) <= 0.0 and float(hi) >= 1.0:
+            self.grid_remove()
+        else:
+            self.grid()
+        ttk.Scrollbar.set(self, lo, hi)
+        
+    def pack(self, **kw):
+        raise tk.TclError("cannot use pack with this widget")
+    
+    def place(self, **kw):
+        raise tk.TclError("cannot use place with this widget")
+
