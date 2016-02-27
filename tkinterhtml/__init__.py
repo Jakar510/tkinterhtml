@@ -3,6 +3,7 @@
 import sys
 import os.path
 import platform
+import traceback
 
 try:
     import tkinter as tk
@@ -103,11 +104,23 @@ class TkinterHtml(tk.Widget):
     def _start_selection(self, event):
         self.focus_set()
         self.tag("delete", "selection")
-        self._selection_start_node, self._selection_start_offset = self.node(True, event.x, event.y)
+        try:
+            self._selection_start_node, self._selection_start_offset = self.node(True, event.x, event.y)
+        except:
+            self._selection_start_node = None
+            traceback.print_exc()
     
     def _extend_selection(self, event):
+        if self._selection_start_node is None:
+            return
+        
+        try:
+            self._selection_end_node, self._selection_end_offset = self.node(True, event.x, event.y)
+        except:
+            self._selection_end_node = None
+            traceback.print_exc()
+        
         # TODO: the selection may actually shrink
-        self._selection_end_node, self._selection_end_offset = self.node(True, event.x, event.y)
         self.tag("add", "selection",
             self._selection_start_node, self._selection_start_offset,
             self._selection_end_node, self._selection_end_offset)
@@ -118,6 +131,9 @@ class TkinterHtml(tk.Widget):
 
     
     def copy_selection_to_clipboard(self, event=None):
+        if self._selection_start_node is None or self._selection_end_node is None:
+            return
+        
         start_index = self.text("offset", self._selection_start_node, self._selection_start_offset)
         end_index = self.text("offset", self._selection_end_node, self._selection_end_offset)
         if start_index > end_index:
