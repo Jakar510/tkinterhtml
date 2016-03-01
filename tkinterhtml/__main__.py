@@ -27,6 +27,6 @@ frame.set_content("""
 </html>    
 """)
 
-frame.set_content(urllib.request.urlopen("http://tkhtml.tcl.tk/").read().decode())
+#frame.set_content(urllib.request.urlopen("http://tkhtml.tcl.tk/").read().decode())
 
 root.mainloop()

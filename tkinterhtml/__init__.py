@@ -4,6 +4,7 @@ import sys
 import os.path
 import platform
 import traceback
+import warnings
 
 try:
     import tkinter as tk
@@ -48,6 +49,9 @@ class TkinterHtml(tk.Widget):
         return self.tk.call(self._w, "node", *arguments)
 
     def parse(self, *args):
+        source = args[0]
+        if "<title>" in source.lower():
+            warnings.warn("64-bit Windows Tkhtml has problems with html source containing <title> element. Consider removing it before sending source to parse.\n")
         self.tk.call(self._w, "parse", *args)
 
     def reset(self):
