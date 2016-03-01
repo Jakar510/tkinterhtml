@@ -28,4 +28,4 @@ If you are not happy with those binaries, then you could try compiling Tkhtml yo
 
 If you don't want to keep the binaries inside package directory (maybe because you want to zip your packages), then you should copy the *Tkhtml* folder with *pcgIndex.tcl* and dll/so/dylib in it into your Tcl library directory. In Windows it's *<Python root>\tcl*.
 
-If binaries compiled by me, you could try the binaries from Active Tcl (but check their license about redistribution). Install Active Tcl and execute ``teacup install Tkhtml`` and then search for binaries (eg. Tkhtml30.dll in Windows). 
+If binaries compiled by me doesn't work for you, then you could try the binaries from Active Tcl (but check their license about redistribution). Install Active Tcl and execute ``teacup install Tkhtml`` and then search for binaries (eg. Tkhtml30.dll in Windows). 
