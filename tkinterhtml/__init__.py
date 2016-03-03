@@ -5,6 +5,12 @@ import os.path
 import platform
 import traceback
 import warnings
+from urllib.request import urlopen
+
+try:
+    from urllib2 import urlopen # Python 2
+except ImportError:
+    from urllib.request import urlopen
 
 try:
     import tkinter as tk
@@ -31,8 +37,20 @@ def get_tkhtml_folder():
     
 class TkinterHtml(tk.Widget):
     def __init__(self, master, cfg={}, **kw):
+        """
+        See options descriptions from here: http://tkhtml.tcl.tk/tkhtml.html
+        """
         #print(get_tkhtml_folder())
         load_tkhtml(master, get_tkhtml_folder())
+        
+        if hasattr(master, "tk"):
+            self.tk = master.tk
+        else:
+            self.tk = tk._default_root.tk
+            
+        if "imagecmd" not in kw:
+            kw["imagecmd"] = self.register(self._fetch_image)
+        
         tk.Widget.__init__(self, master, 'html', cfg, kw)
 
         # make selection and copying possible
@@ -43,6 +61,9 @@ class TkinterHtml(tk.Widget):
         self.bind("<1>", self._start_selection, True)
         self.bind("<B1-Motion>", self._extend_selection, True)
         self.bind("<<Copy>>", self.copy_selection_to_clipboard, True)
+        
+        self._image_name_prefix = str(id(self)) + "_img_"
+        self._images = set() # to avoid garbage collecting images
         
 
     def node(self, *arguments):
@@ -105,6 +126,21 @@ class TkinterHtml(tk.Widget):
         """
         return self.yview("scroll", number, what)
     
+    def _fetch_image(self, *args):
+        # TODO: load images in the background
+        # TODO: support base url
+        
+        assert len(args) == 1
+        url = args[0]
+        name = self._image_name_prefix + str(len(self._images))
+        
+        with urlopen(url) as handle:
+            data = handle.read()
+            
+        self._images.add(tk.PhotoImage(name=name, data=data))
+        
+        return name
+    
     def _start_selection(self, event):
         self.focus_set()
         self.tag("delete", "selection")
@@ -151,6 +187,9 @@ class TkinterHtml(tk.Widget):
 class HtmlFrame(ttk.Frame):
     def __init__(self, master, fontscale=0.8, vertical_scrollbar=True,
                  horizontal_scrollbar=True, **kw):
+        """All keyword arguments not listed here are sent to contained TkinterHtml.
+        See descriptions of the options here: http://tkhtml.tcl.tk/tkhtml.html
+        """ 
         
         ttk.Frame.__init__(self, master, **kw)
     
