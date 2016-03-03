@@ -35,6 +35,21 @@ def get_tkhtml_folder():
                          platform.system().replace("Darwin", "MacOSX"),
                          "64-bit" if sys.maxsize > 2**32 else "32-bit")
     
+
+class TkinterHv3(tk.Widget):
+    def __init__(self, master, cfg={}, **kw):
+        load_tkhtml(master, get_tkhtml_folder())
+        master.tk.eval('package require snit')
+        master.tk.eval('package require hv3')
+        kw["requestcmd"] = master.register(self._requestcmd)
+        tk.Widget.__init__(self, master, '::hv3::hv3', cfg, kw)
+    
+    def _requestcmd(self, handle):
+        uri = self.tk.call(handle, "cget", "-uri")
+        # TODO: make it asynchronous
+        self.tk.call(handle, "append", urlopen(uri).read())
+        self.tk.call(handle, "finish")
+
 class TkinterHtml(tk.Widget):
     def __init__(self, master, cfg={}, **kw):
         """
@@ -43,14 +58,10 @@ class TkinterHtml(tk.Widget):
         #print(get_tkhtml_folder())
         load_tkhtml(master, get_tkhtml_folder())
         
-        if hasattr(master, "tk"):
-            self.tk = master.tk
-        else:
-            self.tk = tk._default_root.tk
-            
-        if "imagecmd" not in kw:
-            kw["imagecmd"] = self.register(self._fetch_image)
         
+        if "imagecmd" not in kw:
+            kw["imagecmd"] = master.register(self._fetch_image)
+            
         tk.Widget.__init__(self, master, 'html', cfg, kw)
 
         # make selection and copying possible
@@ -185,6 +196,7 @@ class TkinterHtml(tk.Widget):
 
 
 class HtmlFrame(ttk.Frame):
+    # TODO: if Tkhtml doesn't work out then check out tkgecko
     def __init__(self, master, fontscale=0.8, vertical_scrollbar=True,
                  horizontal_scrollbar=True, **kw):
         """All keyword arguments not listed here are sent to contained TkinterHtml.
