@@ -36,10 +36,17 @@ def get_tkhtml_folder():
                          "64-bit" if sys.maxsize > 2**32 else "32-bit")
     
 
-class TkinterHv3(tk.Widget):
+class _TkinterHv3(tk.Widget):
+    """DOES NOT WORK ACTUALLY, JUST AN EXPERIMENT, PRE-ALPHA!"""
+    
     def __init__(self, master, cfg={}, **kw):
         load_tkhtml(master, get_tkhtml_folder())
-        master.tk.eval('package require snit')
+        
+        # In order to get following imports to work in windows
+        # I copied folder snit2.3.2 from ActiveTcl to C:\Python35\tcl
+        # and combobox.tcl to Tkhtml folder.
+        
+        master.tk.eval('package require snit') 
         master.tk.eval('package require hv3')
         kw["requestcmd"] = master.register(self._requestcmd)
         tk.Widget.__init__(self, master, '::hv3::hv3', cfg, kw)
@@ -69,12 +76,16 @@ class TkinterHtml(tk.Widget):
         self._selection_start_offset = None
         self._selection_end_node = None
         self._selection_end_offset = None
-        self.bind("<1>", self._start_selection, True)
+        self.bind("<1>", self._on_click, True)
         self.bind("<B1-Motion>", self._extend_selection, True)
         self.bind("<<Copy>>", self.copy_selection_to_clipboard, True)
         
         self._image_name_prefix = str(id(self)) + "_img_"
         self._images = set() # to avoid garbage collecting images
+        
+        self.tk.call(self._w, "handler", "script", "script", self.register(self._on_script))
+        self.tk.call(self._w, "handler", "script", "style", self.register(self._on_style))
+        self.tk.call(self._w, "handler", "node", "a", self.register(self._on_a))
         
 
     def node(self, *arguments):
@@ -137,6 +148,15 @@ class TkinterHtml(tk.Widget):
         """
         return self.yview("scroll", number, what)
     
+    def _on_script(self, *args):
+        "Currently just ignoring script"
+    
+    def _on_style(self, *args):
+        "Currently just ignoring style"
+    
+    def _on_a(self, *args):
+        """print("_on_a", args)"""
+    
     def _fetch_image(self, *args):
         # TODO: load images in the background
         # TODO: support base url
@@ -151,6 +171,25 @@ class TkinterHtml(tk.Widget):
         self._images.add(tk.PhotoImage(name=name, data=data))
         
         return name
+    
+    def _get_node_text(self, node_handle):
+        return self.tk.call(node_handle, "text")
+    
+    def _get_node_tag(self, node_handle):
+        return self.tk.call(node_handle, "tag")
+    
+    def _get_node_parent(self, node_handle):
+        return self.tk.call(node_handle, "parent")
+    
+    def _on_click(self, event):
+        self._start_selection(event)
+        
+        node_handle, offset = self.node(True, event.x, event.y)
+        
+        if (self._get_node_tag(node_handle) == "a"
+            or self._get_node_tag(self._get_node_parent(node_handle)) == "a"):
+            print("Clicking on a link: " + self._get_node_text(node_handle))
+            
     
     def _start_selection(self, event):
         self.focus_set()
